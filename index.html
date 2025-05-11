@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <title>Books & Brew</title>
+  <style>
+    * {
+      font-family: 'Montserrat';
+      font-size: 15px;
+      font-weight: 700;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+    }
+
+    .logo {
+      height: 100%;
+      position: absolute;
+      left: 0;
+    }
+
+    .container__all {
+      background: linear-gradient(180deg, #3a7920 0%, #fffbe0 99%);
+      width: 100%;
+      height: 100%;
+    }
+
+    header {
+      background-image: url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c');
+      background-size: auto;
+      background-position: center;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      border-bottom: 2px solid #bbb;
+      position: relative;
+    }
+
+    /*ESTILO FLIPCARDS TALLERES*/
+
+    .card {
+        width: 200px;
+        height: 200px;
+        background-color: #fff6;
+        position: relative;
+        border-radius: 20px;
+    }
+
+    .card__back, .card__front {
+        backface-visibility: hidden;
+        transition: transform 1s;
+        background-color: #fffbe0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card:hover .card__front {
+        transform: perspective(1100px) rotateY(180deg);
+    }
+
+    .card:hover .card__back {
+        transform: perspective(1100px) rotateY(360deg);
+    }
+
+    .card__front {
+        transform: perspective(1100px) rotateY(0deg);
+    }
+
+    .card__back {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+        transform: perspective(1100px) rotateY(180deg);
+    }
+
+    .card__worker {
+        max-height: 150px;
+        overflow: hidden;
+        display: block;
+    }
+
+    .card__worker img {
+        max-width: 100%;
+    }
+
+    .card__data {
+        padding: 12px;
+    }
+
+    .card__data span {
+        padding: 6px 0;
+        display: block;
+    }
+
+    /*FINAL ESTILOS FLIPCARDS TALLERES*/
+
+    .eslogan {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-bottom: 2px solid #ccc;
+      background-color: #3a7920;
+      color: #fffbe0;
+    }
+
+    .back__grid {
+      width: 100vw;
+      background-color: #9a5833;
+    }
+
+    .grid-section {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 15px 40px;
+      padding: 40px;
+      height: 360px;
+      align-items: stretch;
+      justify-content: center;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .carta {
+      grid-row: 1 / 4;
+      background-image: url('https://i.pinimg.com/originals/d5/ba/b6/d5bab642fbbffae6f0171162832e21c8.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 2px solid #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      height: 100%;
+    }
+
+    .promo {
+      background: #fffbe0;
+      border: 2px solid #aaa;
+      padding: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      user-select: none;
+    }
+
+    .promo:hover {
+      background: #f0f0f0;
+    }
+
+    .dropdown-content {
+      background: #fffbe0;
+      border: 1px dashed #999;
+      border-radius: 5px;
+      padding: 8px;
+      margin-top: 8px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-content.active {
+      opacity: 1;
+      max-height: 100px;
+      overflow-y: scroll;
+    }
+
+    .back__talleres {
+      width: 100%;
+      background-color: #56ac31;
+    }
+
+    .row.talleres-row {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      padding-top: 50px;
+    }
+
+    .taller-container {
+      text-align: center;
+    }
+
+    .dropdown-below {
+      margin-top: 10px;
+      background: #fffbe0;
+      border: 1px dashed #aaa;
+      padding: 10px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, max-height 0.4s ease, transform 0.3s ease;
+    }
+
+    .dropdown-below.active {
+      max-height: 100px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .info-wrapper-centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 80px;
+      padding-bottom: 50px;
+    }
+
+    .info-socios {
+      width: 500px;
+      border: 2px solid #aaa;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      background: #fffbe0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .info-socios:hover {
+      background: #f0f0f0;
+    }
+
+    .dropdown-wrapper {
+      margin-top: 8px;
+      border: 1px dashed #aaa;
+      padding: 8px;
+      background: #fffbe0;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .dropdown-wrapper.active {
+      max-height: 100px;
+      opacity: 1;
+    }
+
+    footer {
+      background: #9a5833;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container__all">
+  <header>
+    Books & Brew
+    <img class="logo" src="/log.png" alt="Logo">
+  </header>
+
+  <div class="eslogan">"Donde las palabras se beben y el arte florece"</div>
+    <div class="grid-section">
+      <div class="carta"></div>
+
+      <div>
+        <div class="promo" onclick="toggle(this)">Lit & Latte</div>
+        <div class="dropdown-content">Siendo socio de Lit & Latte tienes hasta un 10%  de descuento en tus bebidas adicionales. Además cada vez que rellenes un tablero con 20 compras tienes hasta un 50% de descuento en un menu completo!!</div>
+      </div>
+      <div>
+        <div class="promo" onclick="toggle(this)">Palette & Pour</div>
+        <div class="dropdown-content">Siendo socio de Palette & Pour podras conseguir un 5% en tus bebidas adicionales, además de que tus obras se podran a la venta en la cafeteria si estas son vendidas tus correspondientes son un 60% de los beneficios obtenidos, con la venta de 5 obras tienes un menu completo gratis!!!</div>
+      </div>
+      <div>
+        <div class="promo" onclick="toggle(this)">Film & Foam</div>
+        <div class="dropdown-content">Siendo socio de Film & Foam consigues un 5% de descuento en tus bebidas adicionales, además de rellenando el tablero con tus 20 compras tendras un dulce gratis!!!</div>
+      </div>
+    </div>
+  <!-- Talleres con imágenes -->
+    <div class="row talleres-row">
+      <div class="taller-container">
+        <div class="card">
+            <div class="card__front">
+                <picture class="card__worker">
+                    <img src="https://www.marinelligroup.eu/wp-content/uploads/2020/11/301011BO-1.jpeg" alt="">
+                </picture>
+                <div class="card__data">
+                    <span>Lit & Latte</span>
+                </div>
+            </div>
+            <div class="card__back">
+            </div>
+            </div>
+      </div>
+      <div class="taller-container">
+        <div class="card">
+            <div class="card__front">
+                <picture class="card__worker">
+                    <img src="https://www.marinelligroup.eu/wp-content/uploads/2020/11/301011BO-1.jpeg" alt="">
+                </picture>
+                <div class="card__data">
+                    <span>Palette & Pour</span>
+                </div>
+            </div>
+            <div class="card__back">
+            </div>
+            </div>
+      </div>
+      <div class="taller-container">
+        <div class="card">
+            <div class="card__front">
+                <picture class="card__worker">
+                    <img src="https://www.marinelligroup.eu/wp-content/uploads/2020/11/301011BO-1.jpeg" alt="">
+                </picture>
+                <div class="card__data">
+                    <span>Film & Foam</span>
+                </div>
+            </div>
+            <div class="card__back">
+            </div>
+            </div>
+      </div>
+    </div>
+
+  <!-- Info Socios centrado -->
+    <div class="info-wrapper-centered">
+      <div class="info-socios" onclick="toggle(this)">INFO SOCIOS</div>
+      <div class="dropdown-wrapper">Detalles sobre cómo hacerse socio, ventajas y más información útil.</div>
+    </div>
+  </div>
+
+  <footer>
+    Redes Sociales / Gmail / Contacto
+  </footer>
+</div>
+
+  <script>
+    function toggle(element) {
+      // Cerrar todos los desplegables
+      document.querySelectorAll('.dropdown-content, .dropdown-below, .dropdown-wrapper').forEach(el => {
+        if (el !== element.nextElementSibling) {
+          el.classList.remove('active');
+        }
+      });
+
+      // Alternar el desplegable actual
+      const content = element.nextElementSibling;
+      if (content) {
+        content.classList.toggle('active');
+      }
+    }
+
+    // Cerrar desplegables si se hace clic fuera
+    document.addEventListener('click', function(e) {
+      const isClickInside = e.target.closest('.promo, .taller, .info-socios');
+      if (!isClickInside) {
+        document.querySelectorAll('.dropdown-content, .dropdown-below, .dropdown-wrapper').forEach(el => {
+          el.classList.remove('active');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
